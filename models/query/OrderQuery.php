@@ -1,0 +1,38 @@
+<?php
+
+namespace app\models\query;
+
+use app\models\Order;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
+/**
+ * This is the ActiveQuery class for [[\app\models\Order]].
+ *
+ * @see Order
+ */
+class OrderQuery extends ActiveQuery
+{
+    /*public function active()
+    {
+        return $this->andWhere('[[status]]=1');
+    }*/
+
+    /**
+     * {@inheritdoc}
+     * @return Order[]|array
+     */
+    public function all($db = null): array
+    {
+        return parent::all($db);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return array|ActiveRecord|null
+     */
+    public function one($db = null)
+    {
+        return parent::one($db);
+    }
+}
