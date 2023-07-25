@@ -1,5 +1,6 @@
 <?php
 
+use yii\rest\UrlRule;
 use yii\symfonymailer\Mailer;
 use yii\web\JsonParser;
 
@@ -52,6 +53,14 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => UrlRule::class,
+                    'pluralize' => false,
+                    'controller' => [
+                        'api/product',
+                        'api/account',
+                    ],
+                ],
             ],
         ],
     ],
