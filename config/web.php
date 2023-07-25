@@ -1,6 +1,7 @@
 <?php
 
 use yii\symfonymailer\Mailer;
+use yii\web\JsonParser;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -16,13 +17,17 @@ $config = [
     'components' => [
         'request' => [
             'cookieValidationKey' => '3FHAR353uhxIG-sJAFXstTHb34sBV2Fl',
+            'parsers' => [
+                'application/json' => JsonParser::class
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
+            'enableSession' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -48,6 +53,11 @@ $config = [
             'showScriptName' => false,
             'rules' => [
             ],
+        ],
+    ],
+    'modules' => [
+        'api' => [
+            'class' => app\modules\api\Module::class,
         ],
     ],
     'params' => $params,
