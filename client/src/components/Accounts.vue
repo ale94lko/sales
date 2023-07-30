@@ -17,8 +17,8 @@
                       <div class="slds-select_container"><select class="slds-select" id="select-01" required="">
                         <option value="">Select…</option>
                         <option v-for="account of accounts"
-                                v-bind:value="account"
-                                v-text="account"
+                          v-bind:value="account.id"
+                          v-text="account.name"
                         ></option>
                       </select></div>
                     </div>
@@ -38,13 +38,23 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'accounts',
   data () {
     return {
-      accounts: [
-        'account1'
-      ]
+      accounts: []
+    }
+  },
+  async mounted () {
+    try {
+      const { status, data } = await axios.get('http://localhost:8080/api/account')
+      if (status === 200) {
+        this.accounts = data
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
 }
