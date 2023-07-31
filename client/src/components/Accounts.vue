@@ -8,22 +8,30 @@
             <div class="slds-welcome-mat__content slds-grid">
               <div class="slds-welcome-mat__info slds-size_1-of-1" tabindex="0" role="region">
                 <div class="slds-welcome-mat__info-content">
-                  <div class="slds-form-element">
+                  <div class="slds-form-element" v-bind:class="[{ 'slds-has-error': errors }]">
                     <label class="slds-form-element__label" for="select-01">
                       <abbr class="slds-required" title="required">* </abbr>
-                      Select account
+                      Select Account
                     </label>
                     <div class="slds-form-element__control">
-                      <div class="slds-select_container"><select class="slds-select" id="select-01" required="">
-                        <option value="">Select…</option>
-                        <option v-for="account of accounts"
-                          v-bind:value="account.id"
-                          v-text="account.name"
-                        ></option>
-                      </select></div>
+                      <div class="slds-select_container">
+                        <select class="slds-select" id="select-01" required=""
+                          v-model="selectedAccount"
+                          v-on:change="cleanErrors">
+                          <option value="">Select…</option>
+                          <option v-for="account of accounts"
+                            v-bind:value="account.id"
+                            v-text="account.name">
+                          </option>
+                      </select>
+                      </div>
+                    </div>
+                    <div class="slds-form-element__help" id="error-01" v-if="errors">
+                      {{ errors }}
                     </div>
                   </div>
-                  <button class="slds-button slds-button_neutral">
+                  <button class="slds-button slds-button_neutral"
+                    v-on:click.prevent="createOrder">
                     Create Order
                   </button>
                 </div>
@@ -44,17 +52,37 @@ export default {
   name: 'accounts',
   data () {
     return {
-      accounts: []
+      accounts: [],
+      selectedAccount: null,
+      errors: null
     }
   },
   async mounted () {
     try {
-      const { status, data } = await axios.get('http://localhost:8080/api/account')
+      const { status, data } = await axios.get(
+        'http://localhost:8080/api/account'
+      )
       if (status === 200) {
         this.accounts = data
       }
     } catch (e) {
-      console.log(e)
+      this.errors = e
+    }
+  },
+  methods: {
+    async createOrder () {
+      try {
+        if (!this.selectedAccount) {
+          this.errors = 'Account cannot be blank'
+        } else {
+          this.cleanErrors()
+        }
+      } catch (e) {
+        this.errors = e
+      }
+    },
+    cleanErrors () {
+      this.errors = null
     }
   }
 }
