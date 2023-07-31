@@ -44,24 +44,34 @@
                     </div>
                     <div class="right-column">
                       <div class="order-list" tabindex="0">
-                        <div class="list">
+                        <div class="list slds-scrollable" tabindex="0">
                           <table class="slds-table slds-table_cell-buffer slds-table_bordered">
                             <thead>
                             <tr class="slds-line-height_reset">
                               <th class="" scope="col">
-                                <div class="slds-truncate" title="Product">Product</div>
+                                <div class="slds-truncate" title="Product">
+                                  Product
+                                </div>
                               </th>
                               <th class="" scope="col">
-                                <div class="slds-truncate" title="Unit Price">Unit Price</div>
+                                <div class="slds-truncate" title="Unit Price">
+                                  Unit Price
+                                </div>
                               </th>
                               <th class="" scope="col">
-                                <div class="slds-truncate" title="Quantity">Qty</div>
+                                <div class="slds-truncate" title="Quantity">
+                                  Qty
+                                </div>
                               </th>
                               <th class="" scope="col">
-                                <div class="slds-truncate" title="Total">Total</div>
+                                <div class="slds-truncate" title="Total">
+                                  Total
+                                </div>
                               </th>
                               <th class="" scope="col">
-                                <div class="slds-truncate" title="Actions"></div>
+                                <div class="slds-truncate" title="Actions">
+                                  Actions
+                                </div>
                               </th>
                             </tr>
                             </thead>
@@ -80,17 +90,57 @@
                                 <div class="slds-truncate">{{ product.price * product.qty }}</div>
                               </td>
                               <td data-label="Amount">
-                                <button class="slds-button slds-button_neutral"
+                                <div class="slds-truncate action"
                                   v-on:click="deleteProduct(product.id)">
                                   Delete
-                                </button>
+                                </div>
                               </td>
                             </tr>
                             </tbody>
                           </table>
                         </div>
                         <div class="summary">
-                          <button class="slds-button slds-button_neutral"
+                          <table class="slds-table slds-table_cell-buffer">
+                            <tbody>
+                            <tr class="slds-hint-parent">
+                              <th data-label="Subtotal" scope="row">
+                                <div class="slds-truncate">
+                                  Subtotal
+                                </div>
+                              </th>
+                              <td data-label="Subtotal Value">
+                                <div class="slds-truncate">
+                                  ${{ orderSubtotal.toFixed(2) }}
+                                </div>
+                              </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                              <th data-label="Taxes" scope="row">
+                                <div class="slds-truncate">Taxes (7%)</div>
+                              </th>
+                              <td data-label="Taxes Value">
+                                <div class="slds-truncate">
+                                  ${{ (orderSubtotal * 0.07).toFixed(2) }}
+                                </div>
+                              </td>
+                            </tr>
+                            <tr class="slds-hint-parent">
+                              <th data-label="Total" scope="row">
+                                <div class="slds-truncate">
+                                  <h3 class="slds-welcome-mat__tile-title">
+                                    Total
+                                  </h3>
+                                </div>
+                              </th>
+                              <td data-label="Total Value">
+                                <div class="slds-truncate">
+                                  ${{ (orderSubtotal + orderSubtotal * 0.07).toFixed(2) }}
+                                </div>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                          <button class="slds-button slds-button_neutral submit"
                             v-on:click.prevent="submitOrder">
                             Submit Order
                           </button>
@@ -110,7 +160,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import axios from 'axios'
 
 export default {
@@ -137,14 +186,19 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      currentAccount: (store) => store.currentAccount
-    }),
     productsToSelect () {
       return this.products.filter((product) => {
         return !this.selectedProducts.includes(product.id) &&
           product.name.includes(this.searchText.trim())
       })
+    },
+    orderSubtotal () {
+      let subtotal = 0
+      for (let product of Object.values(this.productOrder)) {
+        subtotal += parseFloat(product.price * product.qty)
+      }
+
+      return subtotal
     }
   },
   methods: {
@@ -208,9 +262,16 @@ export default {
 
   .order-list {
     padding-top: 12px;
-    margin-left: 70px;
+    margin-left: 60px;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .list {
+    height:20rem;
+    width:20rem;
   }
 
   .left-column {
@@ -221,6 +282,19 @@ export default {
 
   .right-column {
     max-width: 600px;
+  }
+
+  .summary {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .submit {
+    margin-top: 5px;
+  }
+
+  .action {
+    cursor: pointer;
   }
 
   .slds-card {
