@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="account">
     <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="welcome-mat-596-label" class="slds-modal slds-fade-in-open slds-modal_small">
       <div class="slds-modal__container">
         <div class="slds-modal__header slds-modal__header_empty"></div>
@@ -19,7 +19,7 @@
                           v-model="selectedAccount"
                           v-on:change="cleanErrors">
                           <option value="">Select…</option>
-                          <option v-for="account of accounts"
+                          <option v-for="account of accounts" :key="account.id"
                             v-bind:value="account.id"
                             v-text="account.name">
                           </option>
@@ -47,6 +47,7 @@
 
 <script>
 import axios from 'axios'
+import router from '../router'
 
 export default {
   name: 'accounts',
@@ -70,15 +71,15 @@ export default {
     }
   },
   methods: {
-    async createOrder () {
-      try {
-        if (!this.selectedAccount) {
-          this.errors = 'Account cannot be blank'
-        } else {
-          this.cleanErrors()
-        }
-      } catch (e) {
-        this.errors = e
+    createOrder () {
+      if (!this.selectedAccount) {
+        this.errors = 'Account cannot be blank'
+      } else {
+        this.cleanErrors()
+        router.push({
+          name: 'orders',
+          params: { accountId: this.selectedAccount }
+        })
       }
     },
     cleanErrors () {
