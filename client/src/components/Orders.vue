@@ -43,7 +43,58 @@
                       </div>
                     </div>
                     <div class="right-column">
-                      <div class="slds-scrollable_y order-list" tabindex="0">
+                      <div class="order-list" tabindex="0">
+                        <div class="list">
+                          <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                            <tr class="slds-line-height_reset">
+                              <th class="" scope="col">
+                                <div class="slds-truncate" title="Product">Product</div>
+                              </th>
+                              <th class="" scope="col">
+                                <div class="slds-truncate" title="Unit Price">Unit Price</div>
+                              </th>
+                              <th class="" scope="col">
+                                <div class="slds-truncate" title="Quantity">Qty</div>
+                              </th>
+                              <th class="" scope="col">
+                                <div class="slds-truncate" title="Total">Total</div>
+                              </th>
+                              <th class="" scope="col">
+                                <div class="slds-truncate" title="Actions"></div>
+                              </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="slds-hint-parent" v-for="product of productOrder">
+                              <th data-label="Opportunity Name" scope="row">
+                                <div class="slds-truncate">{{ product.name }}</div>
+                              </th>
+                              <td data-label="Account Name">
+                                <div class="slds-truncate">{{ product.price }}</div>
+                              </td>
+                              <td data-label="Close Date">
+                                <div class="slds-truncate">{{ product.qty }}</div>
+                              </td>
+                              <td data-label="Prospecting">
+                                <div class="slds-truncate">{{ product.price * product.qty }}</div>
+                              </td>
+                              <td data-label="Amount">
+                                <button class="slds-button slds-button_neutral"
+                                  v-on:click="deleteProduct(product.id)">
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="summary">
+                          <button class="slds-button slds-button_neutral"
+                            v-on:click.prevent="submitOrder">
+                            Submit Order
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -68,12 +119,12 @@ export default {
     return {
       products: [],
       selectedProducts: [],
+      productOrder: [],
       searchText: '',
       errors: null
     }
   },
   async mounted () {
-    console.log(this.$route.params.accountId)
     try {
       const { status, data } = await axios.get(
         'http://localhost:8080/api/product'
@@ -92,14 +143,36 @@ export default {
     productsToSelect () {
       return this.products.filter((product) => {
         return !this.selectedProducts.includes(product.id) &&
-          product.name.includes(this.searchText)
+          product.name.includes(this.searchText.trim())
       })
     }
   },
   methods: {
     addProduct (id) {
       this.selectedProducts.push(id)
-      console.log(this.currentAccount)
+      let product = this.products.find((product) => {
+        return product.id === id
+      })
+      product.qty = 1
+
+      this.productOrder.push(product)
+    },
+    deleteProduct (id) {
+      let index = this.selectedProducts.findIndex((productId) => {
+        return productId === id
+      })
+      if (index !== -1) {
+        this.selectedProducts.splice(index, 1)
+      }
+
+      let orderIndex = this.productOrder.findIndex((product) => {
+        return product.id === id
+      })
+      if (orderIndex !== -1) {
+        this.productOrder.splice(orderIndex, 1)
+      }
+    },
+    async submitOrder () {
     },
     cleanErrors () {
       this.errors = null
@@ -134,13 +207,20 @@ export default {
   }
 
   .order-list {
+    padding-top: 12px;
     margin-left: 70px;
+    display: flex;
+    flex-direction: column;
   }
 
   .left-column {
     border: 2px solid #4d5154;
     border-radius: 7px;
     padding: 10px;
+  }
+
+  .right-column {
+    max-width: 600px;
   }
 
   .slds-card {
@@ -153,6 +233,7 @@ export default {
 
   .slds-card__header {
     margin-bottom: 0.50rem;
+    padding-right: 0;
   }
 
   .slds-scrollable_y {
