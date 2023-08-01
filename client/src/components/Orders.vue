@@ -151,10 +151,16 @@
                             </tr>
                             </tbody>
                           </table>
-                          <button class="slds-button slds-button_neutral submit"
-                            v-on:click.prevent="submitOrder">
-                            Submit Order
-                          </button>
+                          <div class="slds-button-group-row submit" role="group">
+                            <button class="slds-button slds-button_brand"
+                              v-on:click.prevent="submitOrder">
+                              Submit Order
+                            </button>
+                            <button class="slds-button slds-button_neutral"
+                              v-on:click.prevent="cancelOrder">
+                              Cancel
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -172,6 +178,7 @@
 
 <script>
 import axios from 'axios'
+import router from '../router'
 
 export default {
   name: 'order',
@@ -255,6 +262,9 @@ export default {
     },
     async submitOrder () {
     },
+    cancelOrder () {
+      router.push({ name: 'accounts' })
+    },
     keypressInputMask (e) {
       if (e.keyCode < 48 || e.keyCode > 58) {
         e.preventDefault()
@@ -326,6 +336,8 @@ export default {
 
   .submit {
     margin-top: 5px;
+    display: flex;
+    justify-content: end;
   }
 
   .action {
