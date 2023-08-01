@@ -76,20 +76,31 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="slds-hint-parent" v-for="product of productOrder">
-                              <th data-label="Opportunity Name" scope="row">
-                                <div class="slds-truncate">{{ product.name }}</div>
+                            <tr class="slds-hint-parent" v-for="product of productOrder" :key="product.id">
+                              <th data-label="Product" scope="row">
+                                <div class="slds-truncate">
+                                  {{ product.name }}
+                                </div>
                               </th>
-                              <td data-label="Account Name">
-                                <div class="slds-truncate">{{ product.price }}</div>
+                              <td data-label="Unit Price">
+                                <div class="slds-truncate">
+                                  {{ product.price }}
+                                </div>
                               </td>
-                              <td data-label="Close Date">
-                                <div class="slds-truncate">{{ product.qty }}</div>
+                              <td data-label="Quantity">
+                                <div class="slds-truncate">
+                                  <input class="number" type="number" min="1" max="99"
+                                    v-model="product.qty"
+                                    v-on:input="calculateOrderSubtotal()"
+                                    v-on:keypress="keypressInputMask($event)"/>
+                                </div>
                               </td>
-                              <td data-label="Prospecting">
-                                <div class="slds-truncate">{{ product.price * product.qty }}</div>
+                              <td data-label="Total">
+                                <div class="slds-truncate">
+                                  {{ calculateProductTotal(product) }}
+                                </div>
                               </td>
-                              <td data-label="Amount">
+                              <td data-label="Actions">
                                 <div class="slds-truncate action"
                                   v-on:click="deleteProduct(product.id)">
                                   Delete
@@ -110,7 +121,7 @@
                               </th>
                               <td data-label="Subtotal Value">
                                 <div class="slds-truncate">
-                                  ${{ orderSubtotal.toFixed(2) }}
+                                  {{ orderSubtotalValue }}
                                 </div>
                               </td>
                             </tr>
@@ -120,7 +131,7 @@
                               </th>
                               <td data-label="Taxes Value">
                                 <div class="slds-truncate">
-                                  ${{ (orderSubtotal * 0.07).toFixed(2) }}
+                                  {{ taxesValue }}
                                 </div>
                               </td>
                             </tr>
@@ -134,7 +145,7 @@
                               </th>
                               <td data-label="Total Value">
                                 <div class="slds-truncate">
-                                  ${{ (orderSubtotal + orderSubtotal * 0.07).toFixed(2) }}
+                                  {{ totalValue }}
                                 </div>
                               </td>
                             </tr>
@@ -169,6 +180,7 @@ export default {
       products: [],
       selectedProducts: [],
       productOrder: [],
+      orderSubtotal: 0,
       searchText: '',
       errors: null
     }
@@ -192,13 +204,14 @@ export default {
           product.name.includes(this.searchText.trim())
       })
     },
-    orderSubtotal () {
-      let subtotal = 0
-      for (let product of Object.values(this.productOrder)) {
-        subtotal += parseFloat(product.price * product.qty)
-      }
-
-      return subtotal
+    orderSubtotalValue () {
+      return '$' + this.orderSubtotal.toFixed(2)
+    },
+    taxesValue () {
+      return '$' + (this.orderSubtotal * 0.07).toFixed(2)
+    },
+    totalValue () {
+      return '$' + (this.orderSubtotal + this.orderSubtotal * 0.07).toFixed(2)
     }
   },
   methods: {
@@ -210,6 +223,7 @@ export default {
       product.qty = 1
 
       this.productOrder.push(product)
+      this.calculateOrderSubtotal()
     },
     deleteProduct (id) {
       let index = this.selectedProducts.findIndex((productId) => {
@@ -225,8 +239,29 @@ export default {
       if (orderIndex !== -1) {
         this.productOrder.splice(orderIndex, 1)
       }
+
+      this.calculateOrderSubtotal()
+    },
+    calculateOrderSubtotal () {
+      let subtotal = 0
+      for (let product of Object.values(this.productOrder)) {
+        subtotal += parseFloat(product.price * product.qty)
+      }
+
+      this.orderSubtotal = subtotal
+    },
+    calculateProductTotal (product) {
+      return (product.price * product.qty).toFixed(2)
     },
     async submitOrder () {
+    },
+    keypressInputMask (e) {
+      if (e.keyCode < 48 || e.keyCode > 58) {
+        e.preventDefault()
+      }
+      if (e.target.value.length > 1) {
+        e.preventDefault()
+      }
     },
     cleanErrors () {
       this.errors = null
@@ -295,6 +330,20 @@ export default {
 
   .action {
     cursor: pointer;
+  }
+
+  .number {
+    max-width: 25px;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield;
   }
 
   .slds-card {
