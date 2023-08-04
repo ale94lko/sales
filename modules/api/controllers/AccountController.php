@@ -2,13 +2,13 @@
 
 namespace app\modules\api\controllers;
 
-use app\modules\api\resources\AccountResource;
+use app\models\Account;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
 
 class AccountController extends ActiveController
 {
-    public $modelClass = AccountResource::class;
+    public $modelClass = Account::class;
 
     public function behaviors(): array
     {

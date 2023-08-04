@@ -2,9 +2,7 @@
 
 namespace app\models;
 
-use app\models\query\ProductQuery;
 use Yii;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -48,24 +46,5 @@ class Product extends ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'price' => Yii::t('app', 'Price'),
         ];
-    }
-
-    /**
-     * Gets query for [[OrderProducts]].
-     *
-     * @return ActiveQuery
-     */
-    public function getOrderProducts(): ActiveQuery
-    {
-        return $this->hasMany(OrderProduct::class, ['product_id' => 'id']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return ProductQuery the active query used by this AR class.
-     */
-    public static function find(): ProductQuery
-    {
-        return new ProductQuery(get_called_class());
     }
 }

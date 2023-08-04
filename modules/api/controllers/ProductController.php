@@ -2,13 +2,13 @@
 
 namespace app\modules\api\controllers;
 
-use app\modules\api\resources\ProductResource;
+use app\models\Product;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
 
 class ProductController extends ActiveController
 {
-    public $modelClass = ProductResource::class;
+    public $modelClass = Product::class;
 
     public function behaviors(): array
     {

@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use app\models\query\OrderQuery;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -56,14 +55,5 @@ class Order extends ActiveRecord
             'taxes' => Yii::t('app', 'Taxes'),
             'total' => Yii::t('app', 'Total'),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return OrderQuery the active query used by this AR class.
-     */
-    public static function find(): OrderQuery
-    {
-        return new OrderQuery(get_called_class());
     }
 }

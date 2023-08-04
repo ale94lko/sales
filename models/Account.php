@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use app\models\query\AccountQuery;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -55,14 +54,5 @@ class Account extends ActiveRecord
             'state' => Yii::t('app', 'State'),
             'postal_code' => Yii::t('app', 'Postal Code'),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return AccountQuery the active query used by this AR class.
-     */
-    public static function find(): AccountQuery
-    {
-        return new AccountQuery(get_called_class());
     }
 }
