@@ -59,6 +59,7 @@ $config = [
                     'controller' => [
                         'api/product',
                         'api/account',
+                        'api/order',
                     ],
                 ],
             ],
