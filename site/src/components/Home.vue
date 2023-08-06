@@ -108,7 +108,14 @@ export default {
   methods: {
     ...mapMutations(['setAccountList']),
     isActiveLink(route) {
-      return router.currentRoute.value.name === route
+      switch (route) {
+        case 'accounts':
+          return router.currentRoute.value.name === route
+            || router.currentRoute.value.name === 'create-order'
+
+        default:
+          return router.currentRoute.value.name === route
+      }
     },
   },
 }

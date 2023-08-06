@@ -85,7 +85,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
+import router from "@/router";
 
 export default {
   name: 'accounts-component',
@@ -101,8 +102,10 @@ export default {
     }),
   },
   methods: {
+    ...mapMutations(['setCurrentAccountId']),
     createOrder(accountId) {
-      console.log(accountId)
+      this.setCurrentAccountId(accountId)
+      router.push({ name: 'create-order' })
     },
   }
 }
