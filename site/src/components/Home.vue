@@ -40,7 +40,14 @@
                       { 'slds-is-active': isActiveLink('home') },
                     ]">
                     <router-link to="/" class="slds-context-bar__label-action">
-                      Home
+                      <span class="slds-indicator-container"></span>
+                      <span class="slds-icon_container" title="Home">
+                        <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                          <use xlink:href="@/assets/icons/standard-sprite/svg/symbols.svg#home"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Home</span>
+                      </span>
+                      <span class="slds-truncate" title="Home">Home</span>
                     </router-link>
                   </li>
                   <li v-bind:class="[
@@ -48,7 +55,14 @@
                       { 'slds-is-active': isActiveLink('accounts') },
                     ]">
                     <router-link to="/accounts" class="slds-context-bar__label-action">
-                      Accounts
+                      <span class="slds-indicator-container"></span>
+                      <span class="slds-icon_container" title="Accounts">
+                        <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                          <use xlink:href="@/assets/icons/standard-sprite/svg/symbols.svg#user"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Accounts</span>
+                      </span>
+                      <span class="slds-truncate" title="Home">Accounts</span>
                     </router-link>
                   </li>
                   <li v-bind:class="[
@@ -56,7 +70,14 @@
                       { 'slds-is-active': isActiveLink('products') },
                     ]">
                     <router-link to="/products" class="slds-context-bar__label-action">
-                      Products
+                      <span class="slds-indicator-container"></span>
+                      <span class="slds-icon_container" title="Products">
+                        <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                          <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#description"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Products</span>
+                      </span>
+                      <span class="slds-truncate" title="Home">Products</span>
                     </router-link>
                   </li>
                 </ul>
