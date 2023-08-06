@@ -16,7 +16,10 @@ Thumbs.db
 /vendor
 
 # vue node_modules dir
-/client/node_modules
+/site/node_modules
+
+#assets folder
+/site/src/assets
 
 # composer itself is not needed
 composer.phar
