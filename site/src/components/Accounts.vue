@@ -90,12 +90,6 @@ import router from "@/router";
 
 export default {
   name: 'accounts-component',
-  data () {
-    return {
-      selectedAccount: null,
-      errors: null
-    }
-  },
   computed: {
     ...mapState({
       accountList: (state) => state.accountList,
@@ -110,13 +104,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  select {
-    min-width: 200px;
-  }
-
-  button {
-    margin-top: 20px;
-  }
-</style>

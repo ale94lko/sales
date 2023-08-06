@@ -55,7 +55,7 @@
                       'slds-context-bar__item',
                       { 'slds-is-active': isActiveLink('products') },
                     ]">
-                    <router-link to="/accounts" class="slds-context-bar__label-action">
+                    <router-link to="/products" class="slds-context-bar__label-action">
                       Products
                     </router-link>
                   </li>
