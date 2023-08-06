@@ -161,11 +161,11 @@
                           </table>
                           <div class="slds-button-group-row submit" role="group">
                             <button class="slds-button slds-button_brand"
-                              v-on:click.prevent="submitOrder">
+                              v-on:click.prevent="submitOrder()">
                               Submit Order
                             </button>
                             <button class="slds-button slds-button_neutral"
-                              v-on:click.prevent="cancelOrder">
+                              v-on:click.prevent="cancelOrder()">
                               Cancel
                             </button>
                           </div>
@@ -187,7 +187,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import axios from 'axios'
-import router from '../router'
+import router from '@/router'
 
 export default {
   name: 'orders-component',
@@ -296,7 +296,7 @@ export default {
             'http://localhost:8080/api/order/insert', order
           )
           if (status === 201) {
-            router.push({ name: 'accounts' })
+            await router.push({name: 'message'})
           }
         } catch (e) {
           this.errors = e
