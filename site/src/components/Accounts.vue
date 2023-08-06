@@ -81,6 +81,13 @@
                 <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#add_relationship"></use>
               </svg>
             </span>
+            <span class="slds-icon_container" title="Delete">
+              <svg class="slds-icon slds-icon_x-small slds-icon-text-error"
+                aria-hidden="true"
+                v-on:click="removeAccount(account.id)">
+                <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#delete"></use>
+              </svg>
+            </span>
           </div>
         </td>
       </tr>
@@ -90,8 +97,9 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
-import router from "@/router";
+import { mapActions, mapMutations, mapState } from 'vuex'
+import router from '@/router'
+import axios from 'axios'
 
 export default {
   name: 'accounts-component',
@@ -102,9 +110,26 @@ export default {
   },
   methods: {
     ...mapMutations(['setCurrentAccountId']),
+    ...mapActions(['deleteAccount']),
     createOrder(accountId) {
       this.setCurrentAccountId(accountId)
       router.push({ name: 'create-order' })
+    },
+    async removeAccount(accountId) {
+      try {
+        const { status } = await axios.delete(
+          'http://localhost:8080/api/account/' + accountId
+        )
+        if (status === 204) {
+          await this.deleteAccount(accountId)
+        }
+      } catch (e) {
+        this.setErrors(e)
+        let cleanErrors = setInterval(() => {
+          this.setErrors(null)
+          clearInterval(cleanErrors)
+        }, 5000)
+      }
     },
   }
 }
@@ -113,5 +138,6 @@ export default {
 <style scoped>
   .slds-icon {
     cursor: pointer;
+    margin-right: 5px;
   }
 </style>

@@ -35,12 +35,12 @@
         <td data-label="Actions">
           <div class="slds-truncate action">
             <span class="slds-icon_container" title="Delete">
-                <svg class="slds-icon slds-icon_x-small slds-icon-text-error"
-                  aria-hidden="true"
-                  v-on:click="removeProduct(product.id)">
-                  <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#delete"></use>
-                </svg>
-              </span>
+              <svg class="slds-icon slds-icon_x-small slds-icon-text-error"
+                aria-hidden="true"
+                v-on:click="removeProduct(product.id)">
+                <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#delete"></use>
+              </svg>
+            </span>
           </div>
         </td>
       </tr>
@@ -51,7 +51,7 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   name: 'products-component',
@@ -61,12 +61,8 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations([
-      'setErrors',
-    ]),
-    ...mapActions([
-      'deleteProduct',
-    ]),
+    ...mapMutations(['setErrors']),
+    ...mapActions(['deleteProduct']),
     async removeProduct(productId) {
       try {
         const { status } = await axios.delete(
@@ -90,5 +86,6 @@ export default {
 <style scoped>
   .slds-icon {
     cursor: pointer;
+    margin-right: 5px;
   }
 </style>

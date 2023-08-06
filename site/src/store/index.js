@@ -51,5 +51,19 @@ export default createStore({
         commit('setErrors', err)
       }
     },
+    deleteAccount({ commit, state }, accountId) {
+      let index = state.accountList.findIndex((account) => {
+        return account.id === accountId
+      })
+
+      if (index !== -1) {
+        let tempAccounts = state.accountList
+        tempAccounts.splice(index, 1)
+        commit('setAccountList', tempAccounts)
+      } else {
+        let err = 'The account you are trying to delete does not longer exist'
+        commit('setErrors', err)
+      }
+    },
   },
 })
