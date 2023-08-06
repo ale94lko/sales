@@ -115,6 +115,36 @@
                     <div class="slds-backdrop slds-backdrop_open modal-bg" role="presentation"></div>
                   </div>
                   <router-view />
+                  <div class="demo-only demo-only_viewport" style="height:4.5rem" v-if="errors">
+                    <div class="slds-notification-container">
+                      <section class="slds-notification"
+                        role="dialog"
+                        aria-labelledby="noti-393"
+                        aria-describedby="dialog-body-id-392">
+                        <div class="slds-notification__body" id="dialog-body-id-392">
+                          <a class="slds-notification__target slds-media" href="#">
+                            <span class="slds-icon_container slds-icon-standard-event slds-media__figure" title="event">
+                              <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                <use xlink:href="@/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                              </svg>
+                            </span>
+                            <div class="slds-media__body">
+                              <h2 class="slds-text-heading_small slds-m-bottom_xx-small" id="noti-393">
+                                An error occurred
+                              </h2>
+                              <p>{{ errors }}</p>
+                            </div>
+                          </a>
+                          <button class="slds-button slds-button_icon slds-button_icon-container slds-notification__close"
+                            v-on:click="cleanErrors()">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                              <use xlink:href="@/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                            </svg>
+                          </button>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -205,6 +235,9 @@ export default {
         router.push({ name: this.modal.cancelRoute })
       }
     },
+    cleanErrors() {
+      this.setErrors(null)
+    }
   },
 }
 </script>
@@ -216,5 +249,9 @@ export default {
 
   .slds-modal__container {
     width: 60% !important;
+  }
+
+  .slds-notification-container {
+    top: 8rem;
   }
 </style>

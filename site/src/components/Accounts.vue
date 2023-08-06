@@ -109,7 +109,7 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations(['setCurrentAccountId']),
+    ...mapMutations(['setErrors', 'setCurrentAccountId']),
     ...mapActions(['deleteAccount']),
     createOrder(accountId) {
       this.setCurrentAccountId(accountId)

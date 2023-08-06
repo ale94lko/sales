@@ -1,13 +1,5 @@
 <template>
   <div class="container">
-    <div class="slds-notify_container slds-is-relative" v-if="errors">
-      <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
-        <span class="slds-assistive-text">error</span>
-        <div class="slds-notify__content">
-          <h2 class="slds-text-heading_small">{{ errors }}</h2>
-        </div>
-      </div>
-    </div>
     <div class="slds-clearfix">
       <div class="slds-float_right">
         <h3 class="slds-welcome-mat__tile-title">New Order</h3>
@@ -192,7 +184,6 @@ export default {
       productOrder: [],
       orderSubtotal: 0,
       searchText: '',
-      errors: null
     }
   },
   mounted() {
@@ -207,6 +198,7 @@ export default {
   },
   computed: {
     ...mapState({
+      errors: (state) => state.errors,
       productList: (state) => state.productList,
       accountId: (state) => state.currentAccountId,
     }),
@@ -272,10 +264,11 @@ export default {
     },
     async submitOrder() {
       if (this.productOrder.length === 0) {
-        this.errors =
-            'Order cannot be empty. Please select at least one product.'
+        let error = 'Order cannot be empty. Please select at least one product.'
+        this.setErrors(error)
+
         let cleanErrors = setInterval(() => {
-          this.errors = null
+          this.setErrors(null)
           clearInterval(cleanErrors)
         }, 5000)
       } else {
@@ -304,9 +297,9 @@ export default {
             this.cleanProducts()
           }
         } catch (e) {
-          this.errors = e
+          this.setErrors(e)
           let cleanErrors = setInterval(() => {
-            this.errors = null
+            this.cleanErrors()
             clearInterval(cleanErrors)
           }, 5000)
         }
@@ -328,7 +321,7 @@ export default {
       this.productOrder = []
     },
     cleanErrors() {
-      this.errors = null
+      this.setErrors(null)
     }
   }
 }
