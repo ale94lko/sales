@@ -19,7 +19,7 @@
                           v-model="selectedAccount"
                           v-on:change="cleanErrors">
                           <option value="">Select…</option>
-                          <option v-for="account of accounts" :key="account.id"
+                          <option v-for="account of accountList" :key="account.id"
                             v-bind:value="account.id"
                             v-text="account.name">
                           </option>
@@ -46,40 +46,46 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import axios from 'axios'
-import router from '../router'
+import router from '@/router'
 
 export default {
   name: 'accounts-component',
   data () {
     return {
-      accounts: [],
       selectedAccount: null,
       errors: null
     }
   },
   async mounted () {
-    try {
-      const { status, data } = await axios.get(
-        'http://localhost:8080/api/account'
-      )
-      if (status === 200) {
-        this.accounts = data
+    if (this.accountList.length === 0) {
+      try {
+        const { status, data } = await axios.get(
+          'http://localhost:8080/api/account'
+        )
+        if (status === 200) {
+          this.setAccountList(data)
+        }
+      } catch (e) {
+        this.errors = e
       }
-    } catch (e) {
-      this.errors = e
     }
   },
+  computed: {
+    ...mapState({
+      accountList: (state) => state.accountList,
+    }),
+  },
   methods: {
+    ...mapMutations(['setAccountList', 'setCurrentAccountId']),
     createOrder () {
       if (!this.selectedAccount) {
         this.errors = 'Account cannot be blank'
       } else {
         this.cleanErrors()
-        router.push({
-          name: 'orders',
-          params: { accountId: this.selectedAccount }
-        })
+        this.setCurrentAccountId(this.selectedAccount)
+        router.push({ name: 'orders' })
       }
     },
     cleanErrors () {

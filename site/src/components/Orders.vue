@@ -185,14 +185,14 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import axios from 'axios'
 import router from '../router'
 
 export default {
-  name: 'order-component',
+  name: 'orders-component',
   data () {
     return {
-      products: [],
       selectedProducts: [],
       productOrder: [],
       orderSubtotal: 0,
@@ -201,20 +201,26 @@ export default {
     }
   },
   async mounted () {
-    try {
-      const { status, data } = await axios.get(
-        'http://localhost:8080/api/product'
-      )
-      if (status === 200) {
-        this.products = data
+    if (this.productList.length === 0) {
+      try {
+        const {status, data} = await axios.get(
+          'http://localhost:8080/api/product'
+        )
+        if (status === 200) {
+          this.setProductList(data)
+        }
+      } catch (e) {
+        this.errors = e
       }
-    } catch (e) {
-      this.errors = e
     }
   },
   computed: {
+    ...mapState({
+      productList: (state) => state.productList,
+      accountId: (state) => state.currentAccountId,
+    }),
     productsToSelect () {
-      return this.products.filter((product) => {
+      return this.productList.filter((product) => {
         return !this.selectedProducts.includes(product.id) &&
           product.name.includes(this.searchText.trim())
       })
@@ -230,9 +236,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setProductList']),
     addProduct (id) {
       this.selectedProducts.push(id)
-      let product = this.products.find((product) => {
+      let product = this.productList.find((product) => {
         return product.id === id
       })
       product.qty = 1
@@ -279,7 +286,7 @@ export default {
       } else {
         try {
           let order = {
-            account_id: this.$route.params.accountId,
+            account_id: this.accountId,
             subtotal: this.orderSubtotal,
             taxes: this.taxesValue.replace('$', ''),
             total: this.totalValue.replace('$', ''),

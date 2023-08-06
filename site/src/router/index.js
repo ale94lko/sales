@@ -9,7 +9,7 @@ const routes = [
     component: Accounts
   },
   {
-    path: '/orders/:accountId',
+    path: '/orders',
     name: 'orders',
     component: Orders
   }
