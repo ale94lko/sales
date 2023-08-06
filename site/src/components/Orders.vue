@@ -17,6 +17,9 @@
       <div class="left-column">
         <div class="slds-form-element">
           <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left search-box">
+            <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+              <use xlink:href="@/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+            </svg>
             <input v-model="searchText" type="text" id="text-input-id-472" placeholder="Search Products" class="slds-input" />
           </div>
         </div>
@@ -32,6 +35,9 @@
                 <div class="slds-no-flex">
                   <button class="slds-button slds-button_neutral"
                     v-on:click="addProduct(product.id)">
+                    <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                      <use xlink:href="@/assets/icons/utility-sprite/svg/symbols.svg#new"></use>
+                    </svg>
                     Add
                   </button>
                 </div>
@@ -101,9 +107,14 @@
                   </div>
                 </td>
                 <td data-label="Actions">
-                  <div class="slds-truncate action"
-                       v-on:click="deleteProduct(product.id)">
-                    Delete
+                  <div class="slds-truncate action">
+                    <span class="slds-icon_container" title="Delete">
+                      <svg class="slds-icon slds-icon_x-small slds-icon-text-error"
+                        aria-hidden="true"
+                        v-on:click="deleteProduct(product.id)">
+                        <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#delete"></use>
+                      </svg>
+                    </span>
                   </div>
                 </td>
               </tr>
@@ -339,12 +350,11 @@ export default {
   }
 
   .search-box {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   .order-list {
     padding-top: 12px;
-    margin-left: 60px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -375,7 +385,7 @@ export default {
     justify-content: end;
   }
 
-  .action {
+  .slds-icon {
     cursor: pointer;
   }
 

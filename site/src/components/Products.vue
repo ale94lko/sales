@@ -33,9 +33,14 @@
           </div>
         </td>
         <td data-label="Actions">
-          <div class="slds-truncate action"
-            v-on:click="deleteProduct(product.id)">
-            Delete
+          <div class="slds-truncate action">
+            <span class="slds-icon_container" title="Delete">
+                <svg class="slds-icon slds-icon_x-small slds-icon-text-error"
+                  aria-hidden="true"
+                  v-on:click="deleteProduct(product.id)">
+                  <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#delete"></use>
+                </svg>
+              </span>
           </div>
         </td>
       </tr>
@@ -62,3 +67,8 @@ export default {
 }
 </script>
 
+<style scoped>
+  .slds-icon {
+    cursor: pointer;
+  }
+</style>

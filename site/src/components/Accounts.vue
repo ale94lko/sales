@@ -73,9 +73,14 @@
           </div>
         </td>
         <td data-label="Actions">
-          <div class="slds-truncate action"
-            v-on:click="createOrder(account.id)">
-            Create Order
+          <div class="slds-truncate action">
+            <span class="slds-icon_container" title="Create order">
+              <svg class="slds-icon slds-icon_x-small slds-icon-text-success"
+                aria-hidden="true"
+                v-on:click="createOrder(account.id)">
+                <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#add_relationship"></use>
+              </svg>
+            </span>
           </div>
         </td>
       </tr>
@@ -104,3 +109,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .slds-icon {
+    cursor: pointer;
+  }
+</style>
