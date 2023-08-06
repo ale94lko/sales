@@ -67,6 +67,7 @@
                  tabindex="0"
                  role="region">
                 <div class="slds-welcome-mat__info-content">
+                  <router-view />
                 </div>
               </div>
             </div>
@@ -79,11 +80,33 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import router from '@/router'
+import axios from "axios";
 
 export default {
   name: 'home-component',
+  async mounted () {
+    if (this.accountList.length === 0) {
+      try {
+        const { status, data } = await axios.get(
+          'http://localhost:8080/api/account'
+        )
+        if (status === 200) {
+          this.setAccountList(data)
+        }
+      } catch (e) {
+        this.errors = e
+      }
+    }
+  },
+  computed: {
+    ...mapState({
+      accountList: (state) => state.accountList,
+    }),
+  },
   methods: {
+    ...mapMutations(['setAccountList']),
     isActiveLink(route) {
       return router.currentRoute.value.name === route
     },
