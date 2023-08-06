@@ -36,5 +36,20 @@ export default createStore({
       state.productList = data
     },
   },
-  actions: {},
+  actions: {
+    deleteProduct({ commit, state }, productId) {
+      let index = state.productList.findIndex((product) => {
+        return product.id === productId
+      })
+
+      if (index !== -1) {
+        let tempProducts = state.productList
+        tempProducts.splice(index, 1)
+        commit('setProductList', tempProducts)
+      } else {
+        let err = 'The product you are trying to delete does not longer exist'
+        commit('setErrors', err)
+      }
+    },
+  },
 })

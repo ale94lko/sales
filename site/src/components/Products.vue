@@ -37,7 +37,7 @@
             <span class="slds-icon_container" title="Delete">
                 <svg class="slds-icon slds-icon_x-small slds-icon-text-error"
                   aria-hidden="true"
-                  v-on:click="deleteProduct(product.id)">
+                  v-on:click="removeProduct(product.id)">
                   <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#delete"></use>
                 </svg>
               </span>
@@ -50,7 +50,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState, mapActions } from 'vuex'
+import axios from "axios";
 
 export default {
   name: 'products-component',
@@ -60,8 +61,27 @@ export default {
     }),
   },
   methods: {
-    deleteProduct(productId) {
-      console.log(productId)
+    ...mapMutations([
+      'setErrors',
+    ]),
+    ...mapActions([
+      'deleteProduct',
+    ]),
+    async removeProduct(productId) {
+      try {
+        const { status } = await axios.delete(
+          'http://localhost:8080/api/product/' + productId
+        )
+        if (status === 204) {
+          await this.deleteProduct(productId)
+        }
+      } catch (e) {
+        this.setErrors(e)
+        let cleanErrors = setInterval(() => {
+          this.setErrors(null)
+          clearInterval(cleanErrors)
+        }, 5000)
+      }
     },
   }
 }
