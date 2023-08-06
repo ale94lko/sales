@@ -184,18 +184,14 @@ export default {
       errors: null
     }
   },
-  async mounted () {
-    if (this.productList.length === 0) {
-      try {
-        const {status, data} = await axios.get(
-          'http://localhost:8080/api/product'
-        )
-        if (status === 200) {
-          this.setProductList(data)
-        }
-      } catch (e) {
-        this.errors = e
-      }
+  mounted() {
+    if (this.accountId === null) {
+      this.setErrors('Please select an account to create order')
+      let cleanErrors = setInterval(() => {
+        this.setErrors(null)
+        clearInterval(cleanErrors)
+      }, 5000)
+      router.push({ name: 'accounts' })
     }
   },
   computed: {
@@ -203,25 +199,29 @@ export default {
       productList: (state) => state.productList,
       accountId: (state) => state.currentAccountId,
     }),
-    productsToSelect () {
+    productsToSelect() {
       return this.productList.filter((product) => {
         return !this.selectedProducts.includes(product.id) &&
           product.name.includes(this.searchText.trim())
       })
     },
-    orderSubtotalValue () {
+    orderSubtotalValue() {
       return '$' + this.orderSubtotal.toFixed(2)
     },
-    taxesValue () {
+    taxesValue() {
       return '$' + (this.orderSubtotal * 0.07).toFixed(2)
     },
-    totalValue () {
+    totalValue() {
       return '$' + (this.orderSubtotal + this.orderSubtotal * 0.07).toFixed(2)
     }
   },
   methods: {
-    ...mapMutations(['setProductList']),
-    addProduct (id) {
+    ...mapMutations([
+      'setErrors',
+      'setShowModal',
+      'setModal',
+    ]),
+    addProduct(id) {
       this.selectedProducts.push(id)
       let product = this.productList.find((product) => {
         return product.id === id
@@ -231,7 +231,7 @@ export default {
       this.productOrder.push(product)
       this.calculateOrderSubtotal()
     },
-    deleteProduct (id) {
+    deleteProduct(id) {
       let index = this.selectedProducts.findIndex((productId) => {
         return productId === id
       })
@@ -248,7 +248,7 @@ export default {
 
       this.calculateOrderSubtotal()
     },
-    calculateOrderSubtotal () {
+    calculateOrderSubtotal() {
       let subtotal = 0
       for (let product of Object.values(this.productOrder)) {
         subtotal += parseFloat(product.price * product.qty)
@@ -256,10 +256,10 @@ export default {
 
       this.orderSubtotal = subtotal
     },
-    calculateProductTotal (product) {
+    calculateProductTotal(product) {
       return (product.price * product.qty).toFixed(2)
     },
-    async submitOrder () {
+    async submitOrder() {
       if (this.productOrder.length === 0) {
         this.errors =
             'Order cannot be empty. Please select at least one product.'
@@ -280,7 +280,17 @@ export default {
             'http://localhost:8080/api/order/insert', order
           )
           if (status === 201) {
-            await router.push({name: 'message'})
+            let modal = {
+              title: 'Successful Operation',
+              message: 'Your order has been submitted successfully',
+              confirmRoute: null,
+              confirmMessage: 'Create Another Order',
+              cancelRoute: 'accounts',
+              cancelMessage: 'Change Account',
+            }
+            this.setModal(modal)
+            this.setShowModal(true)
+            this.cleanProducts()
           }
         } catch (e) {
           this.errors = e
@@ -291,10 +301,10 @@ export default {
         }
       }
     },
-    cancelOrder () {
+    cancelOrder() {
       router.push({ name: 'accounts' })
     },
-    keypressInputMask (e) {
+    keypressInputMask(e) {
       if (e.keyCode < 48 || e.keyCode > 58) {
         e.preventDefault()
       }
@@ -302,7 +312,11 @@ export default {
         e.preventDefault()
       }
     },
-    cleanErrors () {
+    cleanProducts() {
+      this.selectedProducts = []
+      this.productOrder = []
+    },
+    cleanErrors() {
       this.errors = null
     }
   }

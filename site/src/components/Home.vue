@@ -67,6 +67,30 @@
                  tabindex="0"
                  role="region">
                 <div class="slds-welcome-mat__info-content">
+                  <div class="modal" v-if="showModal">
+                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                      <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                          <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{{ modal.title }}</h1>
+                        </div>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                          {{ modal.message }}
+                        </div>
+                        <div class="slds-modal__footer">
+                          <button class="slds-button slds-button_brand"
+                            aria-label="Cancel and close"
+                            v-on:click="confirmModal()">
+                            {{ modal.confirmMessage }}
+                          </button>
+                          <button class="slds-button slds-button_neutral"
+                            v-on:click="cancelModal()">
+                            {{ modal.cancelMessage }}
+                          </button>
+                        </div>
+                      </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open modal-bg" role="presentation"></div>
+                  </div>
                   <router-view />
                 </div>
               </div>
@@ -82,7 +106,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import router from '@/router'
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   name: 'home-component',
@@ -96,17 +120,46 @@ export default {
           this.setAccountList(data)
         }
       } catch (e) {
-        this.errors = e
+        this.setErrors(e)
+        let cleanErrors = setInterval(() => {
+          this.setErrors(null)
+          clearInterval(cleanErrors)
+        }, 5000)
+      }
+    }
+    if (this.productList.length === 0) {
+      try {
+        const { status, data } = await axios.get(
+          'http://localhost:8080/api/product'
+        )
+        if (status === 200) {
+          this.setProductList(data)
+        }
+      } catch (e) {
+        this.setErrors(e)
+        let cleanErrors = setInterval(() => {
+          this.setErrors(null)
+          clearInterval(cleanErrors)
+        }, 5000)
       }
     }
   },
   computed: {
     ...mapState({
+      errors: (state) => state.errors,
+      showModal: (state) => state.showModal,
+      modal: (state) => state.modal,
       accountList: (state) => state.accountList,
+      productList: (state) => state.productList,
     }),
   },
   methods: {
-    ...mapMutations(['setAccountList']),
+    ...mapMutations([
+      'setAccountList',
+      'setProductList',
+      'setErrors',
+      'setShowModal',
+    ]),
     isActiveLink(route) {
       switch (route) {
         case 'accounts':
@@ -117,6 +170,28 @@ export default {
           return router.currentRoute.value.name === route
       }
     },
+    confirmModal() {
+      this.setShowModal(false)
+      if (this.modal.confirmRoute) {
+        router.push({ name: this.modal.confirmRoute })
+      }
+    },
+    cancelModal() {
+      this.setShowModal(false)
+      if (this.modal.cancelRoute) {
+        router.push({ name: this.modal.cancelRoute })
+      }
+    },
   },
 }
 </script>
+
+<style>
+  .modal-bg {
+    position: absolute;
+  }
+
+  .slds-modal__container {
+    width: 60% !important;
+  }
+</style>
