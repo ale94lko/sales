@@ -266,7 +266,6 @@ export default {
       if (this.productOrder.length === 0) {
         let error = 'Order cannot be empty. Please select at least one product.'
         this.setErrors(error)
-
         let cleanErrors = setInterval(() => {
           this.setErrors(null)
           clearInterval(cleanErrors)

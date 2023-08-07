@@ -65,5 +65,19 @@ export default createStore({
         commit('setErrors', err)
       }
     },
+    editAccount({ commit, state }, data) {
+      let index = state.accountList.findIndex((account) => {
+        return account.id === data.id
+      })
+
+      if (index !== -1) {
+        let tempAccounts = state.accountList
+        tempAccounts.splice(index, 1, data)
+        commit('setAccountList', tempAccounts)
+      } else {
+        let err = 'The account you are trying to edit does not longer exist'
+        commit('setErrors', err)
+      }
+    }
   },
 })

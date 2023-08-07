@@ -3,6 +3,7 @@ import Home from '@/components/Home'
 import Accounts from '@/components/Accounts'
 import Products from '@/components/Products'
 import Orders from '@/components/Orders'
+import EditAccount from '@/components/EditAccount'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
         path: 'create-order',
         name: 'create-order',
         component: Orders,
+      },
+      {
+        path: 'edit-account',
+        name: 'edit-account',
+        component: EditAccount,
       },
     ],
   },

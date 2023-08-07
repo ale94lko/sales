@@ -14,23 +14,8 @@
           </div>
         </th>
         <th class="" scope="col">
-          <div class="slds-truncate" title="Street">
-            Street
-          </div>
-        </th>
-        <th class="" scope="col">
           <div class="slds-truncate" title="City">
             City
-          </div>
-        </th>
-        <th class="" scope="col">
-          <div class="slds-truncate" title="State">
-            State
-          </div>
-        </th>
-        <th class="" scope="col">
-          <div class="slds-truncate" title="Postal Code">
-            Postal Code
           </div>
         </th>
         <th class="" scope="col">
@@ -52,28 +37,20 @@
             {{ account.phone }}
           </div>
         </td>
-        <td data-label="Street">
-          <div class="slds-truncate">
-            {{ account.street }}
-          </div>
-        </td>
         <td data-label="City">
           <div class="slds-truncate">
             {{ account.city }}
           </div>
         </td>
-        <td data-label="State">
-          <div class="slds-truncate">
-            {{ account.state }}
-          </div>
-        </td>
-        <td data-label="Postal Code">
-          <div class="slds-truncate">
-            {{ account.postal_code }}
-          </div>
-        </td>
         <td data-label="Actions">
           <div class="slds-truncate action">
+            <span class="slds-icon_container" title="Edit account">
+              <svg class="slds-icon slds-icon_x-small slds-icon-text-default"
+                aria-hidden="true"
+                v-on:click="editAccount(account.id)">
+                <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#edit"></use>
+              </svg>
+            </span>
             <span class="slds-icon_container" title="Create order">
               <svg class="slds-icon slds-icon_x-small slds-icon-text-success"
                 aria-hidden="true"
@@ -114,6 +91,10 @@ export default {
     createOrder(accountId) {
       this.setCurrentAccountId(accountId)
       router.push({ name: 'create-order' })
+    },
+    editAccount(accountId) {
+      this.setCurrentAccountId(accountId)
+      router.push({ name: 'edit-account' })
     },
     async removeAccount(accountId) {
       try {
