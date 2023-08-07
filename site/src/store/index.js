@@ -102,5 +102,10 @@ export default createStore({
         commit('setErrors', err)
       }
     },
+    addProduct({ commit, state }, data) {
+      let tempProducts = state.productList
+      tempProducts.push(data)
+      commit('setProductList', tempProducts)
+    },
   },
 })
