@@ -75,7 +75,7 @@
                       <span class="slds-indicator-container"></span>
                       <span class="slds-icon_container" title="Products">
                         <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
-                          <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#description"></use>
+                          <use xlink:href="@/assets/icons/standard-sprite/svg/symbols.svg#product_item"></use>
                         </svg>
                         <span class="slds-assistive-text">Products</span>
                       </span>
@@ -225,9 +225,11 @@ export default {
             || router.currentRoute.value.name === 'create-order'
             || router.currentRoute.value.name === 'add-account'
             || router.currentRoute.value.name === 'edit-account'
+            || router.currentRoute.value.name === 'view-orders'
 
         case 'products':
           return router.currentRoute.value.name === route
+            || router.currentRoute.value.name === 'add-product'
             || router.currentRoute.value.name === 'edit-product'
 
         default:

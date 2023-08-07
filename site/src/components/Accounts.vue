@@ -65,6 +65,13 @@
                   <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#edit"></use>
                 </svg>
               </span>
+              <span class="slds-icon_container" title="View Orders">
+                <svg class="slds-icon slds-icon_x-small slds-icon-standard-text-template"
+                  aria-hidden="true"
+                  v-on:click="viewOrders(account.id)">
+                  <use xlink:href="@/assets/icons/standard-sprite/svg/symbols.svg#fulfillment_order"></use>
+                </svg>
+              </span>
               <span class="slds-icon_container" title="Create order">
                 <svg class="slds-icon slds-icon_x-small slds-icon-text-success"
                   aria-hidden="true"
@@ -113,6 +120,10 @@ export default {
     editAccount(accountId) {
       this.setCurrentAccountId(accountId)
       router.push({ name: 'edit-account' })
+    },
+    viewOrders(accountId) {
+      this.setCurrentAccountId(accountId)
+      router.push({ name: 'view-orders' })
     },
     async removeAccount(accountId) {
       try {

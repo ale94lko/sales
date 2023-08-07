@@ -15,6 +15,11 @@ class OrderController extends ActiveController
 {
     public $modelClass = Order::class;
 
+    /**
+     * Get behaviors
+     *
+     * @return array
+     */
     public function behaviors(): array
     {
         $behaviors = parent::behaviors();
@@ -26,6 +31,8 @@ class OrderController extends ActiveController
     }
 
     /**
+     * Insert an Item
+     *
      * @throws ServerErrorHttpException
      * @throws InvalidConfigException
      */
