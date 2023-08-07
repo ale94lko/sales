@@ -23,7 +23,7 @@
         Phone number
       </label>
       <div class="slds-form-element__control">
-        <input type="text" id="form-element-01" class="slds-input"
+        <input type="text" id="form-element-02" class="slds-input"
           placeholder="Enter a phone number"
           v-model="currentAccount.phone"/>
       </div>
@@ -33,7 +33,7 @@
         Street
       </label>
       <div class="slds-form-element__control">
-        <input type="text" id="form-element-01" class="slds-input"
+        <input type="text" id="form-element-03" class="slds-input"
           placeholder="Enter a street"
           v-model="currentAccount.street"/>
       </div>
@@ -43,7 +43,7 @@
         City
       </label>
       <div class="slds-form-element__control">
-        <input type="text" id="form-element-01" class="slds-input"
+        <input type="text" id="form-element-04" class="slds-input"
           placeholder="Enter a city"
           v-model="currentAccount.city"/>
       </div>
@@ -53,7 +53,7 @@
         State
       </label>
       <div class="slds-form-element__control">
-        <input type="text" id="form-element-01" class="slds-input"
+        <input type="text" id="form-element-05" class="slds-input"
           placeholder="Enter a state"
           v-model="currentAccount.state"/>
       </div>
@@ -63,7 +63,7 @@
         Postal code
       </label>
       <div class="slds-form-element__control">
-        <input type="text" id="form-element-01" class="slds-input"
+        <input type="text" id="form-element-06" class="slds-input"
           placeholder="Enter a postal code"
           v-model="currentAccount.postal_code"/>
       </div>

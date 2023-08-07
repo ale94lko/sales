@@ -23,11 +23,11 @@
         Price
       </label>
       <div class="slds-form-element__control">
-        <input type="text" id="form-element-01" class="slds-input"
+        <input type="text" id="form-element-02" class="slds-input"
           placeholder="Enter a price"
           v-model="currentProduct.price"/>
       </div>
-      <div class="slds-form-element__help" id="error-01" v-if="localErrors.price">
+      <div class="slds-form-element__help" id="error-02" v-if="localErrors.price">
         {{ localErrors.price }}
       </div>
     </div>
@@ -50,7 +50,7 @@ import router from '@/router'
 import axios from 'axios'
 
 export default {
-  name: 'edit-product',
+  name: 'add-product',
   data() {
     return {
       currentProduct: {

@@ -18,24 +18,16 @@
         <thead>
         <tr class="slds-line-height_reset">
           <th scope="col">
-            <div class="slds-truncate" title="Name">
-              Name
-            </div>
+            <div class="slds-truncate" title="Name">Name</div>
           </th>
           <th scope="col">
-            <div class="slds-truncate" title="Phone">
-              Phone
-            </div>
+            <div class="slds-truncate" title="Phone">Phone</div>
           </th>
           <th scope="col">
-            <div class="slds-truncate" title="City">
-              City
-            </div>
+            <div class="slds-truncate" title="City">City</div>
           </th>
           <th scope="col">
-            <div class="slds-truncate" title="Actions">
-              Actions
-            </div>
+            <div class="slds-truncate" title="Actions">Actions</div>
           </th>
         </tr>
         </thead>
@@ -108,7 +100,12 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations(['setErrors', 'setCurrentAccountId']),
+    ...mapMutations([
+      'setErrors',
+      'setCurrentAccountId',
+      'setShowModal',
+      'setModal',
+    ]),
     ...mapActions(['deleteAccount']),
     createOrder(accountId) {
       this.setCurrentAccountId(accountId)
@@ -132,6 +129,16 @@ export default {
         )
         if (status === 204) {
           await this.deleteAccount(accountId)
+          let modal = {
+            title: 'Successful Operation',
+            message: 'Account successfully deleted',
+            confirmRoute: null,
+            confirmMessage: 'Keep on list',
+            cancelRoute: 'home',
+            cancelMessage: 'Go home',
+          }
+          this.setModal(modal)
+          this.setShowModal(true)
         }
       } catch (e) {
         this.setErrors(e)

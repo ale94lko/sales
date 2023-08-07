@@ -87,8 +87,8 @@
             </div>
             <div class="slds-welcome-mat__content slds-grid">
               <div class="slds-welcome-mat__info slds-size_1-of-1"
-                 tabindex="0"
-                 role="region">
+                tabindex="0"
+                role="region">
                 <div class="slds-welcome-mat__info-content">
                   <div class="modal" v-if="showModal">
                     <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
@@ -168,7 +168,7 @@ import axios from 'axios'
 
 export default {
   name: 'home-component',
-  async mounted () {
+  async mounted() {
     if (this.accountList.length === 0) {
       try {
         const { status, data } = await axios.get(

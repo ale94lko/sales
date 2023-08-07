@@ -47,43 +47,29 @@
               <thead>
               <tr class="slds-line-height_reset">
                 <th scope="col">
-                  <div class="slds-truncate" title="Product">
-                    Product
-                  </div>
+                  <div class="slds-truncate" title="Product">Product</div>
                 </th>
                 <th scope="col">
-                  <div class="slds-truncate" title="Unit Price">
-                    Unit Price
-                  </div>
+                  <div class="slds-truncate" title="Unit Price">Unit Price</div>
                 </th>
                 <th scope="col">
-                  <div class="slds-truncate" title="Quantity">
-                    Qty
-                  </div>
+                  <div class="slds-truncate" title="Quantity">Qty</div>
                 </th>
                 <th scope="col">
-                  <div class="slds-truncate" title="Total">
-                    Total
-                  </div>
+                  <div class="slds-truncate" title="Total">Total</div>
                 </th>
                 <th scope="col">
-                  <div class="slds-truncate" title="Actions">
-                    Actions
-                  </div>
+                  <div class="slds-truncate" title="Actions">Actions</div>
                 </th>
               </tr>
               </thead>
               <tbody>
               <tr class="slds-hint-parent" v-for="product of productOrder" :key="product.id">
                 <th data-label="Product" scope="row">
-                  <div class="slds-truncate">
-                    {{ product.name }}
-                  </div>
+                  <div class="slds-truncate">{{ product.name }}</div>
                 </th>
                 <td data-label="Unit Price">
-                  <div class="slds-truncate">
-                    {{ product.price }}
-                  </div>
+                  <div class="slds-truncate">{{ product.price }}</div>
                 </td>
                 <td data-label="Quantity">
                   <div class="slds-truncate">
@@ -118,14 +104,10 @@
               <tbody>
               <tr class="slds-hint-parent">
                 <th data-label="Subtotal" scope="row">
-                  <div class="slds-truncate">
-                    Subtotal
-                  </div>
+                  <div class="slds-truncate">Subtotal</div>
                 </th>
                 <td data-label="Subtotal Value">
-                  <div class="slds-truncate">
-                    {{ orderSubtotalValue }}
-                  </div>
+                  <div class="slds-truncate">{{ orderSubtotalValue }}</div>
                 </td>
               </tr>
               <tr class="slds-hint-parent">
@@ -133,23 +115,17 @@
                   <div class="slds-truncate">Taxes (7%)</div>
                 </th>
                 <td data-label="Taxes Value">
-                  <div class="slds-truncate">
-                    {{ taxesValue }}
-                  </div>
+                  <div class="slds-truncate">{{ taxesValue }}</div>
                 </td>
               </tr>
               <tr class="slds-hint-parent">
                 <th data-label="Total" scope="row">
                   <div class="slds-truncate">
-                    <h3 class="slds-welcome-mat__tile-title">
-                      Total
-                    </h3>
+                    <h3 class="slds-welcome-mat__tile-title">Total</h3>
                   </div>
                 </th>
                 <td data-label="Total Value">
-                  <div class="slds-truncate">
-                    {{ totalValue }}
-                  </div>
+                  <div class="slds-truncate">{{ totalValue }}</div>
                 </td>
               </tr>
               </tbody>

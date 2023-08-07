@@ -74,7 +74,7 @@
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
 import axios from 'axios'
-import router from "@/router";
+import router from '@/router'
 
 export default {
   name: 'products-component',
@@ -84,7 +84,12 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations(['setErrors', 'setCurrentProductId']),
+    ...mapMutations([
+      'setErrors',
+      'setCurrentProductId',
+      'setShowModal',
+      'setModal',
+    ]),
     ...mapActions(['deleteProduct']),
     addProduct() {
       router.push({ name: 'add-product' })
@@ -100,6 +105,16 @@ export default {
         )
         if (status === 204) {
           await this.deleteProduct(productId)
+          let modal = {
+            title: 'Successful Operation',
+            message: 'Product successfully deleted',
+            confirmRoute: null,
+            confirmMessage: 'Keep on list',
+            cancelRoute: 'home',
+            cancelMessage: 'Go home',
+          }
+          this.setModal(modal)
+          this.setShowModal(true)
         }
       } catch (e) {
         this.setErrors(e)

@@ -5,43 +5,29 @@
         <thead>
         <tr class="slds-line-height_reset">
           <th scope="col">
-            <div class="slds-truncate" title="Subtotal">
-              Subtotal
-            </div>
+            <div class="slds-truncate" title="Subtotal">Subtotal</div>
           </th>
           <th scope="col">
-            <div class="slds-truncate" title="Taxes">
-              Taxes
-            </div>
+            <div class="slds-truncate" title="Taxes">Taxes</div>
           </th>
           <th scope="col">
-            <div class="slds-truncate" title="Total">
-              Total
-            </div>
+            <div class="slds-truncate" title="Total">Total</div>
           </th>
           <th scope="col">
-            <div class="slds-truncate" title="Actions">
-              Actions
-            </div>
+            <div class="slds-truncate" title="Actions">Actions</div>
           </th>
         </tr>
         </thead>
         <tbody>
         <tr class="slds-hint-parent" v-for="order of orderList" :key="order.id">
           <td data-label="Subtotal">
-            <div class="slds-truncate">
-              {{ order.subtotal }}
-            </div>
+            <div class="slds-truncate">{{ order.subtotal }}</div>
           </td>
           <td data-label="Taxes">
-            <div class="slds-truncate">
-              {{ order.taxes }}
-            </div>
+            <div class="slds-truncate">{{ order.taxes }}</div>
           </td>
           <td data-label="Total Amount">
-            <div class="slds-truncate">
-              {{ order.total }}
-            </div>
+            <div class="slds-truncate">{{ order.total }}</div>
           </td>
           <td data-label="Actions">
             <div class="slds-truncate action">
@@ -73,13 +59,13 @@ import router from '@/router'
 import axios from 'axios'
 
 export default {
-  name: 'accounts-component',
+  name: 'view-orders',
   data() {
     return {
       orderList: [],
     }
   },
-  async mounted () {
+  async mounted() {
     if (this.accountId === null) {
       this.setErrors('Please select an account to see orders')
       let cleanErrors = setInterval(() => {
