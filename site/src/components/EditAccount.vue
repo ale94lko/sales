@@ -87,7 +87,7 @@ import router from '@/router'
 import axios from 'axios'
 
 export default {
-  name: "edit-account",
+  name: 'edit-account',
   data() {
     return {
       currentAccount: {
@@ -100,7 +100,7 @@ export default {
         postal_code: null,
       },
       localErrors: {
-        name: null
+        name: null,
       },
     }
   },
@@ -119,9 +119,11 @@ export default {
       }, 5000)
       router.push({ name: 'accounts' })
     } else {
-      this.currentAccount = this.accountList.find((account) => {
-        return account.id === this.accountId
-      })
+      this.currentAccount = {
+        ...this.accountList.find((account) => {
+          return account.id === this.accountId
+        })
+      }
     }
   },
   methods: {

@@ -4,6 +4,7 @@ export default createStore({
   state: {
     errors: null,
     currentAccountId: null,
+    currentProductId: null,
     showModal: false,
     modal: {
       title: null,
@@ -22,6 +23,9 @@ export default createStore({
     },
     setCurrentAccountId(state, data) {
       state.currentAccountId = data
+    },
+    setCurrentProductId(state, data) {
+      state.currentProductId = data
     },
     setShowModal(state, data) {
       state.showModal = data
@@ -78,6 +82,20 @@ export default createStore({
         let err = 'The account you are trying to edit does not longer exist'
         commit('setErrors', err)
       }
-    }
+    },
+    editProduct({ commit, state }, data) {
+      let index = state.productList.findIndex((product) => {
+        return product.id === data.id
+      })
+
+      if (index !== -1) {
+        let tempProducts = state.productList
+        tempProducts.splice(index, 1, data)
+        commit('setProductList', tempProducts)
+      } else {
+        let err = 'The product you are trying to edit does not longer exist'
+        commit('setErrors', err)
+      }
+    },
   },
 })

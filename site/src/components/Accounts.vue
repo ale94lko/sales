@@ -3,22 +3,22 @@
     <table class="slds-table slds-table_cell-buffer slds-table_bordered">
       <thead>
       <tr class="slds-line-height_reset">
-        <th class="" scope="col">
+        <th scope="col">
           <div class="slds-truncate" title="Name">
             Name
           </div>
         </th>
-        <th class="" scope="col">
+        <th scope="col">
           <div class="slds-truncate" title="Phone">
             Phone
           </div>
         </th>
-        <th class="" scope="col">
+        <th scope="col">
           <div class="slds-truncate" title="City">
             City
           </div>
         </th>
-        <th class="" scope="col">
+        <th scope="col">
           <div class="slds-truncate" title="Actions">
             Actions
           </div>
@@ -99,7 +99,7 @@ export default {
     async removeAccount(accountId) {
       try {
         const { status } = await axios.delete(
-          'http://localhost:8080/api/account/' + accountId
+          'http://localhost:8080/api/account/' + encodeURIComponent(accountId)
         )
         if (status === 204) {
           await this.deleteAccount(accountId)

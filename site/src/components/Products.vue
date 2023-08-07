@@ -3,17 +3,17 @@
     <table class="slds-table slds-table_cell-buffer slds-table_bordered">
       <thead>
       <tr class="slds-line-height_reset">
-        <th class="" scope="col">
+        <th scope="col">
           <div class="slds-truncate" title="Name">
             Name
           </div>
         </th>
-        <th class="" scope="col">
+        <th scope="col">
           <div class="slds-truncate" title="Price">
             Price
           </div>
         </th>
-        <th class="" scope="col">
+        <th scope="col">
           <div class="slds-truncate" title="Actions">
             Actions
           </div>
@@ -34,6 +34,13 @@
         </td>
         <td data-label="Actions">
           <div class="slds-truncate action">
+            <span class="slds-icon_container" title="Edit account">
+              <svg class="slds-icon slds-icon_x-small slds-icon-text-default"
+                aria-hidden="true"
+                v-on:click="editProduct(product.id)">
+                <use xlink:href="@/assets/icons/action-sprite/svg/symbols.svg#edit"></use>
+              </svg>
+            </span>
             <span class="slds-icon_container" title="Delete">
               <svg class="slds-icon slds-icon_x-small slds-icon-text-error"
                 aria-hidden="true"
@@ -52,6 +59,7 @@
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
 import axios from 'axios'
+import router from "@/router";
 
 export default {
   name: 'products-component',
@@ -61,8 +69,12 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations(['setErrors']),
+    ...mapMutations(['setErrors', 'setCurrentProductId']),
     ...mapActions(['deleteProduct']),
+    editProduct(productId) {
+      this.setCurrentProductId(productId)
+      router.push({ name: 'edit-product' })
+    },
     async removeProduct(productId) {
       try {
         const { status } = await axios.delete(

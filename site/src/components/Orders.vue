@@ -46,27 +46,27 @@
             <table class="slds-table slds-table_cell-buffer slds-table_bordered">
               <thead>
               <tr class="slds-line-height_reset">
-                <th class="" scope="col">
+                <th scope="col">
                   <div class="slds-truncate" title="Product">
                     Product
                   </div>
                 </th>
-                <th class="" scope="col">
+                <th scope="col">
                   <div class="slds-truncate" title="Unit Price">
                     Unit Price
                   </div>
                 </th>
-                <th class="" scope="col">
+                <th scope="col">
                   <div class="slds-truncate" title="Quantity">
                     Qty
                   </div>
                 </th>
-                <th class="" scope="col">
+                <th scope="col">
                   <div class="slds-truncate" title="Total">
                     Total
                   </div>
                 </th>
-                <th class="" scope="col">
+                <th scope="col">
                   <div class="slds-truncate" title="Actions">
                     Actions
                   </div>

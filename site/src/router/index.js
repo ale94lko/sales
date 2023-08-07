@@ -4,6 +4,7 @@ import Accounts from '@/components/Accounts'
 import Products from '@/components/Products'
 import Orders from '@/components/Orders'
 import EditAccount from '@/components/EditAccount'
+import EditProduct from '@/components/EditProduct'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
         path: 'edit-account',
         name: 'edit-account',
         component: EditAccount,
+      },
+      {
+        path: 'edit-product',
+        name: 'edit-product',
+        component: EditProduct,
       },
     ],
   },
