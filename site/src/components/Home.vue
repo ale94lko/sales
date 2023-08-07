@@ -223,7 +223,12 @@ export default {
         case 'accounts':
           return router.currentRoute.value.name === route
             || router.currentRoute.value.name === 'create-order'
+            || router.currentRoute.value.name === 'add-account'
             || router.currentRoute.value.name === 'edit-account'
+
+        case 'products':
+          return router.currentRoute.value.name === route
+            || router.currentRoute.value.name === 'edit-product'
 
         default:
           return router.currentRoute.value.name === route

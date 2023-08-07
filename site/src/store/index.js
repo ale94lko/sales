@@ -83,6 +83,11 @@ export default createStore({
         commit('setErrors', err)
       }
     },
+    addAccount({ commit, state }, data) {
+      let tempAccounts = state.accountList
+      tempAccounts.push(data)
+      commit('setAccountList', tempAccounts)
+    },
     editProduct({ commit, state }, data) {
       let index = state.productList.findIndex((product) => {
         return product.id === data.id
