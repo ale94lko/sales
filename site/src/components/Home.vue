@@ -115,6 +115,11 @@
                     <div class="slds-backdrop slds-backdrop_open modal-bg" role="presentation"></div>
                   </div>
                   <router-view />
+                  <div class="slds-clearfix" v-if="isActiveLink('home')">
+                    <h3 class="slds-welcome-mat__tile-title slds-context-bar__app-name">
+                      Sell faster and smarter with the sales app
+                    </h3>
+                  </div>
                   <div class="demo-only demo-only_viewport" style="height:4.5rem" v-if="errors">
                     <div class="slds-notification-container">
                       <section class="slds-notification"
