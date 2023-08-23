@@ -25,7 +25,8 @@
       <div class="slds-form-element__control">
         <input type="text" id="form-element-02" class="slds-input"
           placeholder="Enter a price"
-          v-model="currentProduct.price"/>
+          v-model="currentProduct.price"
+          v-on:keypress="keypressInputMask($event)"/>
       </div>
       <div class="slds-form-element__help" id="error-02" v-if="localErrors.price">
         {{ localErrors.price }}
@@ -94,10 +95,20 @@ export default {
     ]),
     ...mapActions(['editProduct']),
     async submitData() {
-      if (this.currentProduct.name.trim() === '') {
+      if (this.currentProduct.name === null) {
         this.localErrors.name = 'Product name cannot be blank'
-      } else if (this.currentProduct.price.trim() === '') {
+      }else if (this.currentProduct.name.trim() === '') {
+        this.cleanErrors()
+        this.localErrors.name = 'Product name cannot be blank'
+      } else if (this.currentProduct.price === null ) {
+        this.cleanErrors()
         this.localErrors.price = 'Product price cannot be blank'
+      } else if (this.currentProduct.price.trim() === '') {
+        this.cleanErrors()
+        this.localErrors.price = 'Product price cannot be blank'
+      } else if (this.currentProduct.price.lastIndexOf('.') != this.currentProduct.price.indexOf('.')) {
+        this.cleanErrors()
+        this.localErrors.price = 'Enter a valid price (e.g. 25.12)'
       } else {
         this.cleanErrors()
         const { status, data } = await axios.put(
@@ -125,6 +136,23 @@ export default {
     cleanErrors() {
       this.localErrors = {
         name: null
+      }
+    },
+    keypressInputMask(e) {
+      if (e.keyCode !== 46 && (e.keyCode < 48 || e.keyCode > 58)) {
+        e.preventDefault()
+      }
+      let value = e.target.value
+      let valid = /(\d+\.\d{2})/.test(value)
+      if (valid) {
+        e.preventDefault()
+      }
+      let first = -1
+      first = e.target.value.indexOf('.')
+      let last = -1
+      last = e.target.value.lastIndexOf('.')
+      if (first != last) {
+        e.preventDefault()
       }
     }
   }

@@ -112,7 +112,9 @@ export default {
     ]),
     ...mapActions(['addAccount']),
     async submitData() {
-      if (this.currentAccount.name.trim() === '') {
+      if (this.currentAccount.name  === null) {
+        this.localErrors.name = 'Account name cannot be blank'
+      } else if (this.currentAccount.name.trim() === '') {
         this.localErrors.name = 'Account name cannot be blank'
       } else {
         this.cleanErrors()
