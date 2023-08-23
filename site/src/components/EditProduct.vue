@@ -97,7 +97,7 @@ export default {
     async submitData() {
       if (this.currentProduct.name === null) {
         this.localErrors.name = 'Product name cannot be blank'
-      }else if (this.currentProduct.name.trim() === '') {
+      } else if (this.currentProduct.name.trim() === '') {
         this.cleanErrors()
         this.localErrors.name = 'Product name cannot be blank'
       } else if (this.currentProduct.price === null ) {
@@ -144,14 +144,14 @@ export default {
       }
       let value = e.target.value
       let valid = /(\d+\.\d{2})/.test(value)
-      if (valid) {
+      if (!valid) {
         e.preventDefault()
       }
       let first = -1
       first = e.target.value.indexOf('.')
       let last = -1
       last = e.target.value.lastIndexOf('.')
-      if (first != last) {
+      if (first !== last) {
         e.preventDefault()
       }
     }
