@@ -4,8 +4,8 @@
 REQUIREMENTS
 ------------
 
-- Composer
-- PHP 7.4
+- [Composer 2.5.2](https://getcomposer.org/download/)
+- [PHP 7.4](https://prototype.php.net/versions/7.4/install/)
 - Node (14.21.3)
 
 
